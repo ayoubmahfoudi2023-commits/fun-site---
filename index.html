@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع أيوب</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>مرحبًا بك في موقع أيوب</h1>
+        <button id="google-signin-btn">تسجيل الدخول بحساب غوغل</button>
+    </div>
+
+    <script>
+        // إعداد Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // تهيئة Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // إعداد زر تسجيل الدخول
+        const googleSigninButton = document.getElementById('google-signin-btn');
+        googleSigninButton.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    alert('مرحبًا، ' + user.displayName);
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in:", error.message);
+                    alert("حدث خطأ أثناء تسجيل الدخول");
+                });
+        });
+    </script>
+</body>
+</html>
